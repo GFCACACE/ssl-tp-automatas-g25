@@ -98,8 +98,8 @@ int automataDecimal(char* cadena){
     }
 
     //Si no acabó en un estado final, el autómata se rechaza por estar incompleto
-    if(estado == estado_final) return 1;
-    else return 0;
+    if(estado == estado_final) return 0;
+    else return -1;
 
 }
 
@@ -140,8 +140,8 @@ int automataHexadecimal(char* cadena){
     }
 
     //Si no acabó en un estado final, el autómata se rechaza por estar incompleto
-    if(estado == estado_final) return 1;
-    else return 0;
+    if(estado == estado_final) return 0;
+    else return -1;
 
 }
 
