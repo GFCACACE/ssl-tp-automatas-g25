@@ -4,23 +4,53 @@
 #include <string.h>
 
 int main(void){
-    char * cadena="-1455464";
-    char *octal="015$";
-    char *decimal = "-34352";
-    char *hexa = "0X75aF$";
-    int d,o,e,h;
-    d= caracterComoEntero(cadena);
-    printf("%d\n",d);
-    o = automataOctal(octal);// 0 si es aceptado, -1 si es rechazado
-    e = automataDecimal(decimal);// 0 si es aceptado, -1 si es rechazado
-    h = automataHexadecimal(hexa);// 0 si es aceptado, -1 si es rechazado
-    printf("Resultado del Autómata Octal: %d", o);
-    printf("\nResultado del Autómata Decimal: %d", e);
-    printf("\nResultado del Autómata Hexadecimal: %d", h);
+    char * cadena="-1$7-8$0x45$044";
+    obtenerNumeros(cadena);
     return 0;
 }
 
 /*Punto 1*/
+
+//Recorte de cadena
+void obtenerNumeros(char *cadena) {
+    
+    int cont_dec=0;
+    int cont_hex=0;
+    int cont_oc=0;
+    
+    char copia[strlen(cadena) + 1];
+    strcpy(copia, cadena); // Copia la cadena original para no modificarla
+
+    char *token = strtok(copia, "$"); // Divide la cadena en tokens separados por '$'
+    char *analizar=malloc(sizeof(token));
+    while (token != NULL) {
+        strcpy(analizar,token);
+        strcat(analizar,"$");
+        printf("Número: %s\n", analizar);
+        if(automataOctal(analizar)==0) cont_oc++;
+        else if(automataDecimal(analizar)==0) cont_dec++;
+        else if(automataHexadecimal(analizar)==0) cont_hex++;
+        else {
+            printf("Error Léxico!\tNo se reconoció el número\n Finalizando Programa...\n");
+            break;
+        }
+        token = strtok(NULL, "$"); // Obtiene el siguiente token
+    }
+    printf("Cadenas Reconocidas:\n\n Decimales:%d\n Hexadecimales:%d\n Octales:%d\n",cont_dec,cont_hex,cont_oc);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 //Autómata Octal
 int automataOctal(char *cadena){
 
