@@ -3,8 +3,13 @@
 #include <math.h>
 #include <string.h>
 
+
+
+
 int main(void){
-    char * cadena="-1$7-8$0x45$044";
+    char * cadena=malloc(sizeof(10000));
+    printf("Ingrese una cadena de números separados por '$':\n ");
+    scanf("%s",cadena);
     obtenerNumeros(cadena);
     return 0;
 }
@@ -17,7 +22,7 @@ void obtenerNumeros(char *cadena) {
     int cont_dec=0;
     int cont_hex=0;
     int cont_oc=0;
-    
+    int error=-1;
     char copia[strlen(cadena) + 1];
     strcpy(copia, cadena); // Copia la cadena original para no modificarla
 
@@ -31,12 +36,13 @@ void obtenerNumeros(char *cadena) {
         else if(automataDecimal(analizar)==0) cont_dec++;
         else if(automataHexadecimal(analizar)==0) cont_hex++;
         else {
-            printf("Error Léxico!\tNo se reconoció el número\n Finalizando Programa...\n");
+            error=0;//hubo error
             break;
         }
         token = strtok(NULL, "$"); // Obtiene el siguiente token
     }
-    printf("Cadenas Reconocidas:\n\n Decimales:%d\n Hexadecimales:%d\n Octales:%d\n",cont_dec,cont_hex,cont_oc);
+    if(error==0) printf("Error Léxico!\tNo se reconoció el número.\n Finalizando Programa...\n");
+    else printf("Cadenas Reconocidas:\n\n Decimales:%d\n Hexadecimales:%d\n Octales:%d\n",cont_dec,cont_hex,cont_oc);
 }
 
 
