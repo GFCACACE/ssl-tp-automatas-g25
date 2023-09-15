@@ -1,26 +1,69 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
-
-
-// int cantidadCaracteres=11;
-// //Realizo la TT mediante size_t (generar una matriz)
-// size_t estadosTT[][cantidadCaracteres]={
-
-// }
-
-
+#include <string.h>
 
 int main(void){
     char * cadena="-1455464";
-    int d;
+    char *octal="015$";
+    int d,o;
     d= caracterComoEntero(cadena);
     printf("%d",d);
-
+    o = automataOctal(octal);// 0 si es aceptado, -1 si es rechazado
+    printf("Resultado del Autómata Octal: %d", o);
     return 0;
+}
+
+/*Punto 1*/
+//Autómata Octal
+int automataOctal(char *cadena){
+
+    //TT
+    size_t estados[][3] = {
+        {1,4,4},
+        {4,2,4},
+        {2,2,0}
+    };
+
+    //Declaro estado final
+    size_t estado_final=0;
+    //Declaro estado inicial
+    size_t estado_inicial = 0;
+    //inicio analizando la cadena
+    size_t estado= estado_inicial;
+    int i;
+    char c;
+    int largo_cadena=strlen(cadena);
+    for(i=0;i<largo_cadena;i++){
+        //Caracter donde está parado
+        c=cadena[i];
+        //Hace la transición respecto a cuál caracter del alfabeto se está procesando
+        if(c=='0') estado = estados[estado][0];
+        else if(c >= '1' && c <='7') estado = estados[estado][1];
+        else if(c == '$') estado = estados[estado][2];
+        //Si no pertenece al alfabeto va directo a estado de rechazo
+        else estado = 4;
+
+        //Si se rechaza, ya salimos del autómata y lo declaramos inválido
+        if(estado == 4) return -1;
+    }
+
+    //Si no acabó en un estado final, el autómata se rechaza por estar incompleto
+    if(estado == estado_final) return 0;
+    else return -1;
 }
 
 
 
+
+
+
+
+
+
+
+
+/*Punto 2*/
 //Función que convierte caracter a entero.
 int caracterComoEntero(char* cadena)//ingresa el caracter en formato int (nos dará su número equivalente de la tabla ASCII)
 {
