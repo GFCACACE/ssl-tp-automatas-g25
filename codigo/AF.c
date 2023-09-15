@@ -8,7 +8,7 @@ int main(void){
     char *octal="015$";
     int d,o;
     d= caracterComoEntero(cadena);
-    printf("%d",d);
+    printf("%d\n",d);
     o = automataOctal(octal);// 0 si es aceptado, -1 si es rechazado
     printf("Resultado del Autómata Octal: %d", o);
     return 0;
@@ -20,9 +20,11 @@ int automataOctal(char *cadena){
 
     //TT
     size_t estados[][3] = {
-        {1,4,4},
-        {4,2,4},
-        {2,2,0}
+    //  0,   [1-7],     $
+        {1,     4,      4},//0
+        {4,     2,      4},//1
+        {2,     2,      0},//2
+        {4,     4,      4} //4
     };
 
     //Declaro estado final
@@ -30,7 +32,7 @@ int automataOctal(char *cadena){
     //Declaro estado inicial
     size_t estado_inicial = 0;
     //inicio analizando la cadena
-    size_t estado= estado_inicial;
+    size_t estado = estado_inicial;
     int i;
     char c;
     int largo_cadena=strlen(cadena);
@@ -64,6 +66,8 @@ int automataOctal(char *cadena){
 
 
 /*Punto 2*/
+//Para cuando se ejecute esta función, ya asumimos que pasa por el autómata anteriormente, por eso no controlamos
+//que esté bien escrito.
 //Función que convierte caracter a entero.
 int caracterComoEntero(char* cadena)//ingresa el caracter en formato int (nos dará su número equivalente de la tabla ASCII)
 {
@@ -78,7 +82,7 @@ int caracterComoEntero(char* cadena)//ingresa el caracter en formato int (nos da
     {
        
         if(cadena[i]>='0' && cadena[i]<='9'){//si es un caracter entre 0 y 9 lo sumamos a la composición
-            nroResultante = nroResultante * 10 + cadena[i] - 48;
+            nroResultante = nroResultante * 10 + cadena[i] - '0';
         }else{//Si es otro caracter lo borro
             break;
         }
