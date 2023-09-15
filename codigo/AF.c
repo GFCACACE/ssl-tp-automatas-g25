@@ -7,13 +7,13 @@ int main(void){
     char * cadena="-1455464";
     char *octal="015$";
     char *decimal = "-34352";
-    char *hexa = "0X75aF";
+    char *hexa = "0X75aF$";
     int d,o,e,h;
     d= caracterComoEntero(cadena);
     printf("%d\n",d);
     o = automataOctal(octal);// 0 si es aceptado, -1 si es rechazado
-    e = automataDecimal(decimal);
-    h = automataHexadecimal(hexa);
+    e = automataDecimal(decimal);// 0 si es aceptado, -1 si es rechazado
+    h = automataHexadecimal(hexa);// 0 si es aceptado, -1 si es rechazado
     printf("Resultado del Autómata Octal: %d", o);
     printf("\nResultado del Autómata Decimal: %d", e);
     printf("\nResultado del Autómata Hexadecimal: %d", h);
@@ -94,7 +94,7 @@ int automataDecimal(char* cadena){
         else estado = 4;
 
         //Si se rechaza, ya salimos del autómata y lo declaramos inválido
-        if(estado == 4) return 0;
+        if(estado == 4) return -1;
     }
 
     //Si no acabó en un estado final, el autómata se rechaza por estar incompleto
@@ -136,7 +136,7 @@ int automataHexadecimal(char* cadena){
         else estado = 4;
 
         //Si se rechaza, ya salimos del autómata y lo declaramos inválido
-        if(estado == 4) return 0;
+        if(estado == 4) return -1;
     }
 
     //Si no acabó en un estado final, el autómata se rechaza por estar incompleto
