@@ -70,7 +70,9 @@ int precedencia(char operador) {
 /*Punto 2 - Pasar UN caracter numérico a un entero*/
 int caracterNumericoAEntero (const char caracter)
 {
+    if (caracter >= '0' && caracter <='9')
     return caracter - '0';//Recalibra el desplazamiento de la tabla ascii
+    else return -1;//Al solo tomar caracteres numéricos y no el signo, el número negativo nos informaría de un error.
 };
 
 /*Función que Formatea la operación para el autómata del punto 1, quién la analiza y valida*/
