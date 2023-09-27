@@ -105,8 +105,8 @@ int evaluarExpresion(const char *expresion) {
         if (isdigit(expresion[i])) {
             // Si el carácter es un dígito, se convierte en un número y se guarda en la pila
             int numero = 0;
-            while (i < longitud && isdigit(expresion[i])) { // Acá en vez de usar isDigit, habria que utilizar el automata que reconoce decimales
-                numero = numero * 10 + caracterNumericoAEntero(expresion[i]); // No entiendo esto, pero es necesario para el funcionamiento
+            while (i < longitud && isdigit(expresion[i])) { 
+                numero = numero * 10 + caracterNumericoAEntero(expresion[i]); 
                 i++;
             }
             numeros[++top_num] = numero;
